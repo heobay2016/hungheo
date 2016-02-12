@@ -115,7 +115,7 @@ angular
               name:'chart.js',
               files:[
                 'plugins/angular-chart.js/angular-chart.min.js',
-                'plugins/angular-chart.js/angular-chart.css'
+                'plugins/angular-chart.js/angular-chart.min.css'
               ]
             }),
             $ocLazyLoad.load({
