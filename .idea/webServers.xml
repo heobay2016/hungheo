@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e549f1fc-caf8-46b4-837a-7a40620abc81" name="hungheo.com" url="http://ftp.hungheo.com">
+        <fileTransfer host="ftp.hungheo.com" port="21" rootFolder="/public_html" password="dfc2dfdfdfc4dfcddf98df9fdf92df93df9b" username="u253130259">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
