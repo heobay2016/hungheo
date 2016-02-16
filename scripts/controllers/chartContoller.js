@@ -7,29 +7,72 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('ChartCtrl', ['$scope', '$timeout', '$http', '$interval', function ($scope, $timeout, $http, $interval) {
+  .controller('ChartCtrl', ['$scope', '$timeout', '$http', '$interval', '$window', function ($scope, $timeout, $http, $interval, $window) {
 
 	  $scope.sjcPrice = "http://www.sjc.com.vn/xml/tygiavang.xml";
 
 
-	  var startInterval = $interval(function(){
-		  console.warn('Get New Price...');
+	  var startInterval = $timeout(function(){
 
+
+		  $scope.xml = '';
 		  $http({
-			  method: 'GET',
-			  url: $scope.sjcPrice
-		  }).then(function successCallback(response) {
-			  console.info('Get successfully!');
+			  method  : 'jsonp',
+			  url     : 'http://www.sjc.com.vn/xml/tygiavang.xml',
+			  params  : {},  // Query Parameters (GET)
+			  transformResponse:function(data) {
+				  // convert the data to JSON and provide
+				  // it to the success function below
+				  var x2js = new X2JS();
+				  var json = x2js.xml_str2json( data );
+				  return json;
+			  }
+		  })
+		  .then(function successCallback(response) {
+				  console.info('Get successfully!');
+				  console.dir(response);
+				  $scope.xml = data.documentElement.innerHTML;
 
-			  console.log(response);
+				}, function errorCallback(response) {
+				  console.log('Get Price error');
 
-		  }, function errorCallback(response) {
+				  $timeout.cancel(startInterval);
+
+				}, function finallyCallback(response) {
+				  console.info('Preparing new session...')
+				})
 
 
-		  }, function finallyCallback(response) {
 
 
-		  });
+		  //$http (
+			//  {
+			//	  method: 'jsonp',
+			//	  contentType: 'application/xml',
+			//	  url: $scope.sjcPrice,
+			//	  transformResponse : function(data) {
+			//		  return $.parseXML(data);
+			//	  }
+			//  })
+			//  .then(function successCallback(response) {
+			//	  console.info('Get successfully!');
+          //
+			//	  // string -> XML document object
+          //
+          //
+			//	  startInterval();
+          //
+			//	  console.log(response);
+          //
+			//  }, function errorCallback(response) {
+			//	  console.log('Get Price error');
+          //
+			//	  $timeout.cancel(startInterval);
+          //
+			//  }, function finallyCallback(response) {
+			//	  console.info('Preparing new session...')
+			//  });
+
 	  }, 3000);
 
 
